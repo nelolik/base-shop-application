@@ -1,20 +1,18 @@
-package com.nelolik.productservice;
+package com.nelolik.productservice.config;
 
 
 import com.nelolik.productservice.mapper.ProductMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.io.Reader;
 
-@TestConfiguration
-@TestPropertySource("classpath:test.properties")
-public class TestConfig {
+@Configuration
+public class ProductConfig {
 
     @Bean
     ProductMapper productMapper() throws IOException {

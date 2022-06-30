@@ -16,9 +16,8 @@ public class ProductConfig {
 
     @Bean
     ProductMapper productMapper() throws IOException {
-        SqlSessionFactory sessionFactory;
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
-        sessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
         return sessionFactory.openSession().getMapper(ProductMapper.class);
     }
 }

@@ -1,7 +1,7 @@
-package com.nelolik.productservice.service;
+package com.nelolik.base_shop.productservice.service;
 
-import com.nelolik.productservice.model.Product;
-import com.nelolik.productservice.model.ProductBarElement;
+import com.nelolik.base_shop.productservice.model.Product;
+import com.nelolik.base_shop.productservice.model.ProductBarElement;
 
 import java.util.List;
 

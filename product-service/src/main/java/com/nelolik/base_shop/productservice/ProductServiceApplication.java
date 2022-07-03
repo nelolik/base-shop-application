@@ -1,4 +1,4 @@
-package com.nelolik.productservice;
+package com.nelolik.base_shop.productservice;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

@@ -1,7 +1,7 @@
-package com.nelolik.productservice.config;
+package com.nelolik.base_shop.productservice.config;
 
 
-import com.nelolik.productservice.mapper.ProductMapper;
+import com.nelolik.base_shop.productservice.mapper.ProductMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;

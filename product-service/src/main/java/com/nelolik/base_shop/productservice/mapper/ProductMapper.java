@@ -1,7 +1,7 @@
-package com.nelolik.productservice.mapper;
+package com.nelolik.base_shop.productservice.mapper;
 
-import com.nelolik.productservice.model.Product;
-import com.nelolik.productservice.model.ProductBarElement;
+import com.nelolik.base_shop.productservice.model.Product;
+import com.nelolik.base_shop.productservice.model.ProductBarElement;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

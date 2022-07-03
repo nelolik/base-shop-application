@@ -1,11 +1,10 @@
-package com.nelolik.productservice;
+package com.nelolik.base_shop.productservice;
 
 
-import com.nelolik.productservice.mapper.ProductMapper;
-import com.nelolik.productservice.model.Product;
-import com.nelolik.productservice.model.ProductBarElement;
+import com.nelolik.base_shop.productservice.mapper.ProductMapper;
+import com.nelolik.base_shop.productservice.model.Product;
+import com.nelolik.base_shop.productservice.model.ProductBarElement;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;

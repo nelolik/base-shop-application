@@ -20,6 +20,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper class="com.nelolik.productservice.mapper.ProductMapper"/>
+        <mapper class="com.nelolik.base_shop.productservice.mapper.ProductMapper"/>
     </mappers>
 </configuration>

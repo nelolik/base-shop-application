@@ -1,21 +1,14 @@
-package com.nelolik.productservice;
+package com.nelolik.base_shop.productservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nelolik.productservice.controller.ProductController;
-import com.nelolik.productservice.mapper.ProductMapper;
-import com.nelolik.productservice.model.Product;
+import com.nelolik.base_shop.productservice.mapper.ProductMapper;
+import com.nelolik.base_shop.productservice.model.Product;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.json.Jackson2JsonEncoder;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;

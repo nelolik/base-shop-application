@@ -21,6 +21,6 @@
         </environment>
     </environments>
     <mappers><!--в данном блоке необходимо описать маперы, которые используются в проекте-->
-        <mapper class="com.nelolik.productservice.mapper.ProductMapper"/>
+        <mapper class="com.nelolik.base_shop.productservice.mapper.ProductMapper"/>
     </mappers>
 </configuration>

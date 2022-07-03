@@ -1,4 +1,4 @@
-package com.nelolik.productservice.model;
+package com.nelolik.base_shop.productservice.model;
 
 
 import lombok.*;

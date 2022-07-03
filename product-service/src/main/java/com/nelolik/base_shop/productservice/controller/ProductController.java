@@ -1,9 +1,8 @@
-package com.nelolik.productservice.controller;
+package com.nelolik.base_shop.productservice.controller;
 
-import com.nelolik.productservice.mapper.ProductMapper;
-import com.nelolik.productservice.model.Product;
-import com.nelolik.productservice.model.ProductBarElement;
-import com.nelolik.productservice.service.ProductService;
+import com.nelolik.base_shop.productservice.model.ProductBarElement;
+import com.nelolik.base_shop.productservice.service.ProductService;
+import com.nelolik.base_shop.productservice.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

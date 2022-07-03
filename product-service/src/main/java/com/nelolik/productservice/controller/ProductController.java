@@ -5,6 +5,7 @@ import com.nelolik.productservice.model.Product;
 import com.nelolik.productservice.model.ProductBarElement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +35,21 @@ public class ProductController {
         if (products == null) {
             products = new ArrayList<>();
         }
+        return products;
+    }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable("id") long id) {
+        Product product = productMapper.getProductById(id);
+        return product;
+    }
+
+    @GetMapping("/category/{category}")
+    public List<Product> getProductsByCategory(@PathVariable("category") String category) {
+        if (category == null) {
+            return new ArrayList<>();
+        }
+        List<Product> products = productMapper.getProductsByCategory(category);
         return products;
     }
 

@@ -18,6 +18,9 @@ public interface ProductMapper {
     @Select("SELECT * FROM product WHERE id = #{id}")
     Product getProductById(@Param("id") Long id);
 
+    @Select("SELECT * FROM product WHERE category = #{category}")
+    List<Product> getProductsByCategory(@Param("category") String category);
+
     @Insert("INSERT INTO product VALUES (#{p.id}, #{p.name}, #{p.description}, #{p.price}, #{p.quantity}, #{p.category})")
     void saveProduct(@Param("p") Product product);
 

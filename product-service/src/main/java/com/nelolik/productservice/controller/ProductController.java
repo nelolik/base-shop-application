@@ -3,6 +3,7 @@ package com.nelolik.productservice.controller;
 import com.nelolik.productservice.mapper.ProductMapper;
 import com.nelolik.productservice.model.Product;
 import com.nelolik.productservice.model.ProductBarElement;
+import com.nelolik.productservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +18,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductMapper productMapper;
+    private final ProductService productService;
 
     @GetMapping()
     public List<Product> getProducts() {
-        List<Product> products = productMapper.getProducts();
+        List<Product> products = productService.getProducts();
         if (products == null) {
             return new ArrayList<>();
         }
@@ -31,7 +32,7 @@ public class ProductController {
     @GetMapping("/for_bar")
     public List<ProductBarElement> getProductListForBar() {
         List<ProductBarElement> products = null;
-        products = productMapper.getProductsForBar();
+        products = productService.getProductsForBar();
         if (products == null) {
             products = new ArrayList<>();
         }
@@ -40,8 +41,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable("id") long id) {
-        Product product = productMapper.getProductById(id);
-        return product;
+        return productService.getProductById(id);
     }
 
     @GetMapping("/category/{category}")
@@ -49,8 +49,7 @@ public class ProductController {
         if (category == null) {
             return new ArrayList<>();
         }
-        List<Product> products = productMapper.getProductsByCategory(category);
-        return products;
+        return productService.getProductsByCategory(category);
     }
 
 

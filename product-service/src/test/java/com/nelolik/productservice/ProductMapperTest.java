@@ -47,10 +47,20 @@ public class ProductMapperTest {
     }
 
     @Test
+    void testGetProductByCategory() {
+        Product expected = new Product(1L, "toothpaste", "gel too clean tooth",
+                200., 22, "health");
+        List<Product> healthCategory = productMapper.getProductsByCategory("health");
+        assertThat(healthCategory).isNotNull().contains(expected);
+    }
+
+    @Test
     void testSaveProduct() {
         Product newProduct = new Product(4L, "new name", "Something very useful",
                 1000., 5, "New category");
+
         productMapper.saveProduct(newProduct);
+
         List<Product> products = productMapper.getProducts();
         assertThat(products).isNotNull().contains(newProduct);
     }

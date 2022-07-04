@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@MapperScan("com.nelolik.productservice.mapper")
+@MapperScan("com.nelolik.base_shop.productservice.mapper")
 public class ProductServiceApplication {
 
 	public static void main(String[] args) {

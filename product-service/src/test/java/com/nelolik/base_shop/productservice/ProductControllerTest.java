@@ -1,7 +1,6 @@
 package com.nelolik.base_shop.productservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nelolik.base_shop.productservice.mapper.ProductMapper;
 import com.nelolik.base_shop.productservice.model.Product;
 import com.nelolik.base_shop.productservice.model.ProductShort;
 import com.nelolik.base_shop.productservice.service.ProductService;

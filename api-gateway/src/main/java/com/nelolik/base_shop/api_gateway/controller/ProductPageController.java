@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class MainPageController {
+public class ProductPageController {
 
     private final ProductService productService;
 

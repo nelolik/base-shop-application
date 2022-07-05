@@ -23,12 +23,7 @@ public class MainPageController {
 
     @GetMapping("/advices")
     public List<ProductShort> getPopularItems() {
-        return null;//TODO
-    }
-
-    @GetMapping("/search/{text}")
-    public List<Product> getSearchedItems() {
-        return null;//TODO
+        return productService.getPopularProductsForBar();
     }
 
     @GetMapping("/catalog/category/{name}")

@@ -9,7 +9,7 @@ public interface ProductService {
 
     List<ProductShort> getPopularProductsForBar();
 
-    List<Product> getSearchedProducts(String text);
+    List<ProductShort> getSearchedProducts(String text);
 
     List<ProductShort> getCategoryProducts(String categoryName);
 

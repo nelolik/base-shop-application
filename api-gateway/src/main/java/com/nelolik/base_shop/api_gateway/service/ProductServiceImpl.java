@@ -14,8 +14,9 @@ import java.util.List;
 @Slf4j
 public class ProductServiceImpl implements ProductService {
 
-    private static final String PRODUCT_CATEGORY_URI = "http://localhost:8080/products/category/";
-    private static final String PRODUCT_ID_URI = "http://localhost:8080/products/id/";
+    private static final String PRODUCT_CATEGORY_URI = "http://localhost:8081/products/category/";
+    private static final String PRODUCT_ID_URI = "http://localhost:8081/products/id/";
+    public static final String PRODUCT_SEARCH_URI = "http://localhost:8081/products/search/";
 
     @Override
     public List<ProductShort> getPopularProductsForBar() {
@@ -24,9 +25,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getSearchedProducts(String text) {
-        //TODO search response in product-service
-        return null;
+    public List<ProductShort> getSearchedProducts(String text) {
+        WebClient client = WebClient.create(PRODUCT_SEARCH_URI + text);
+        return client.get().retrieve()
+                .bodyToFlux(ProductShort.class)
+                .doOnError(e -> log.error("Error retrieve " + PRODUCT_SEARCH_URI + text
+                        + " Original message: " + e.getMessage()))
+                .collectList().block();
     }
 
     @Override
@@ -47,4 +52,5 @@ public class ProductServiceImpl implements ProductService {
                 .doOnError(e -> log.error("Error retrieve " + PRODUCT_ID_URI + id + " Original message: " + e.getMessage()))
                 .block();
     }
+
 }

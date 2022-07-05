@@ -1,6 +1,6 @@
 package com.nelolik.base_shop.productservice.controller;
 
-import com.nelolik.base_shop.productservice.model.ProductBarElement;
+import com.nelolik.base_shop.productservice.model.ProductShort;
 import com.nelolik.base_shop.productservice.service.ProductService;
 import com.nelolik.base_shop.productservice.model.Product;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class ProductController {
     }
 
     @GetMapping("/for_bar")
-    public List<ProductBarElement> getProductListForBar() {
-        List<ProductBarElement> products = null;
+    public List<ProductShort> getProductListForBar() {
+        List<ProductShort> products = null;
         products = productService.getProductsForBar();
         if (products == null) {
             products = new ArrayList<>();
@@ -49,6 +49,14 @@ public class ProductController {
             return new ArrayList<>();
         }
         return productService.getProductsByCategory(category);
+    }
+
+    @GetMapping("search/{text}")
+    public List<ProductShort> getSearchedProducts(@PathVariable("text") String searchedText) {
+        if (searchedText == null) {
+            return new ArrayList<>();
+        }
+        return productService.getProductsContainingInName(searchedText);
     }
 
 

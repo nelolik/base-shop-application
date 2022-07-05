@@ -3,7 +3,7 @@ package com.nelolik.base_shop.productservice;
 
 import com.nelolik.base_shop.productservice.mapper.ProductMapper;
 import com.nelolik.base_shop.productservice.model.Product;
-import com.nelolik.base_shop.productservice.model.ProductBarElement;
+import com.nelolik.base_shop.productservice.model.ProductShort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -31,9 +31,9 @@ public class ProductMapperTest {
 
     @Test
     void testGetProductsForBar() {
-        List<ProductBarElement> products = productMapper.getProductsForBar();
+        List<ProductShort> products = productMapper.getProductsForBar();
         assertThat(products).isNotNull().hasSize(3)
-                .extracting(ProductBarElement::getName).doesNotContainNull()
+                .extracting(ProductShort::getName).doesNotContainNull()
                 .containsExactlyInAnyOrder("toothpaste", "pen", "beacon");
     }
 
@@ -75,5 +75,21 @@ public class ProductMapperTest {
         Product modified = productMapper.getProductById(product.getId());
 
         Assertions.assertEquals(newName, modified.getName());
+    }
+
+    @Test
+    void testSearchByName() {
+        List<ProductShort> result1 = productMapper.findProductsContainingInName("tooth");
+        assertThat(result1).isNotNull().extracting(ProductShort::getName).contains("toothpaste");
+
+        List<ProductShort> result2 = productMapper.findProductsContainingInName("paste");
+        assertThat(result2).isNotNull().extracting(ProductShort::getName).contains("toothpaste");
+
+        List<ProductShort> result3 = productMapper.findProductsContainingInName("e");
+        assertThat(result3).isNotNull().extracting(ProductShort::getName)
+                .containsExactlyInAnyOrder("toothpaste", "pen", "beacon");
+
+        List<ProductShort> result4 = productMapper.findProductsContainingInName("absent");
+        assertThat(result4).isNotNull().isEmpty();
     }
 }

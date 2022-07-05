@@ -1,7 +1,7 @@
 package com.nelolik.base_shop.productservice.service;
 
 import com.nelolik.base_shop.productservice.mapper.ProductMapper;
-import com.nelolik.base_shop.productservice.model.ProductBarElement;
+import com.nelolik.base_shop.productservice.model.ProductShort;
 import com.nelolik.base_shop.productservice.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductBarElement> getProductsForBar() {
+    public List<ProductShort> getProductsForBar() {
         return productMapper.getProductsForBar();
     }
 
@@ -33,5 +33,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductsByCategory(String category) {
         return productMapper.getProductsByCategory(category);
+    }
+
+    @Override
+    public List<ProductShort> getProductsContainingInName(String text) {
+        return productMapper.findProductsContainingInName(text);
     }
 }

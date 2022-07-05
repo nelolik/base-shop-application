@@ -1,7 +1,7 @@
 package com.nelolik.base_shop.productservice.mapper;
 
 import com.nelolik.base_shop.productservice.model.Product;
-import com.nelolik.base_shop.productservice.model.ProductBarElement;
+import com.nelolik.base_shop.productservice.model.ProductShort;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface ProductMapper {
     List<Product> getProducts();
 
     @Select("SELECT p.id, p.name, p.price FROM product p")
-    List<ProductBarElement> getProductsForBar();
+    List<ProductShort> getProductsForBar();
 
     @Select("SELECT * FROM product WHERE id = #{id}")
     Product getProductById(@Param("id") Long id);
@@ -27,4 +27,7 @@ public interface ProductMapper {
     @Update("UPDATE product SET name = #{p.name}, description = #{p.description}, price = #{p.price}, " +
             "quantity = #{p.quantity}, category = #{p.category} WHERE id = #{p.id}")
     void updateProduct(@Param("p") Product product);
+
+    @Select("SELECT p.id, p.name, p.price FROM product p WHERE p.name LIKE '%'||#{s}||'%'")
+    List<ProductShort> findProductsContainingInName(@Param("s") String searchText);
 }

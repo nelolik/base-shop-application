@@ -1,8 +1,10 @@
 package com.nelolik.base_shop.api_gateway.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nelolik.base_shop.api_gateway.model.CatalogEntries;
 import com.nelolik.base_shop.api_gateway.model.Product;
 import com.nelolik.base_shop.api_gateway.model.ProductShort;
+import com.nelolik.base_shop.api_gateway.service.CatalogService;
 import com.nelolik.base_shop.api_gateway.service.ProductService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,6 +35,9 @@ public class ProductPageControllerTest {
     @MockBean
     private ProductService productService;
 
+    @MockBean
+    private CatalogService catalogService;
+
 
     private static long ID = 1;
     private static Product p1 = new Product(ID++, "first", "first product", 100., 20,  "category1");
@@ -40,14 +45,26 @@ public class ProductPageControllerTest {
     private static Product p3 = new Product(ID++, "third", "Best of all", 20., 55, "category2");
     private static List<Product> productList = List.of(p1, p2, p3);
     private static List<ProductShort> featuredProducts = new ArrayList<>();
+    private static List<String> categories;
 
     @BeforeAll
     static void init() {
         for (long i = 1; i < 5; i++) {
             featuredProducts.add(new ProductShort(i, "product" + i, 0.));
         }
+        categories = productList.stream().map(Product::getCategory).distinct().collect(Collectors.toList());
     }
 
+    @Test
+    void getCatalogItemNamesShouldReturnListOfNames() throws Exception {
+        CatalogEntries entries = new CatalogEntries(categories);
+        when(catalogService.getProductCatalogEntries()).thenReturn(entries);
+
+        mockMvc.perform(get("/catalog/entries"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(content().string(containsString(new ObjectMapper().writeValueAsString(entries))));
+    }
 
     @Test
     void getPopularItemsShouldReturnListOfProductShorts() throws Exception {

@@ -1,7 +1,9 @@
 package com.nelolik.base_shop.api_gateway.controller;
 
+import com.nelolik.base_shop.api_gateway.model.CatalogEntries;
 import com.nelolik.base_shop.api_gateway.model.Product;
 import com.nelolik.base_shop.api_gateway.model.ProductShort;
+import com.nelolik.base_shop.api_gateway.service.CatalogService;
 import com.nelolik.base_shop.api_gateway.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +18,11 @@ public class ProductPageController {
 
     private final ProductService productService;
 
+    private final CatalogService catalogService;
+
     @GetMapping("/catalog/entries")
-    public List<String> getCatalogItemNames() {
-        return null;//TODO
+    public CatalogEntries getCatalogItemNames() {
+        return catalogService.getProductCatalogEntries();
     }
 
     @GetMapping("/advices")

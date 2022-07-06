@@ -16,7 +16,7 @@ public class ProductPageController {
 
     private final ProductService productService;
 
-    @GetMapping("/catalog/names")
+    @GetMapping("/catalog/entries")
     public List<String> getCatalogItemNames() {
         return null;//TODO
     }

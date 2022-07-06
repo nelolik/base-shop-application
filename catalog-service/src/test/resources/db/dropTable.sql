@@ -1,0 +1,2 @@
+DROP TABLE product IF EXISTS;
+DROP SEQUENCE hibernate_sequence IF EXISTS;

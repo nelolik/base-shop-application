@@ -23,7 +23,7 @@ public class CatalogServiceTest {
     @Autowired
     private CatalogService catalogService;
 
-    private static int port = 8082;
+    private static final int port = 8082;
     private static WireMockServer server;
 
 

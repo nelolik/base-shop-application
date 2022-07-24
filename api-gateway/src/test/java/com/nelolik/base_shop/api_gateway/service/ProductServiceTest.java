@@ -24,7 +24,7 @@ public class ProductServiceTest {
     @Autowired
     private ProductService productService;
 
-    private static int port = 8081;
+    private static final int port = 8081;
     private static WireMockServer wireMockServer;
 
     private long ID = 1;

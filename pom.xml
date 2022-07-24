@@ -19,6 +19,7 @@
         <module>product-service</module>
         <module>api-gateway</module>
         <module>catalog-service</module>
+        <module>statistic-servise</module>
     </modules>
 
     <properties>

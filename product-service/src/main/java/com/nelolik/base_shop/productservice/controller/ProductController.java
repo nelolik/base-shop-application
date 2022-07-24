@@ -30,8 +30,7 @@ public class ProductController {
 
     @GetMapping("/for_bar")
     public List<ProductShort> getProductListForBar() {
-        List<ProductShort> products = null;
-        products = productService.getProductsForBar();
+        List<ProductShort> products = productService.getProductsForBar();
         if (products == null) {
             products = new ArrayList<>();
         }

@@ -9,7 +9,6 @@ import com.nelolik.base_shop.statistic_service.service.VisitStatisticService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,14 +18,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 
 @SpringBootTest
 @Testcontainers
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = TestRabbitConfig.class)
 public class QueueListenerTest {
 
     @Autowired
@@ -36,18 +34,14 @@ public class QueueListenerTest {
     private VisitStatisticService statisticService;
 
     @Autowired
-    private CachingConnectionFactory connectionFactory;
-
-    @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    private static VisitedProductInfo productInfo;
     private static String message;
 
     @BeforeAll
     static void init() throws JsonProcessingException {
-
-
-        VisitedProductInfo productInfo = new VisitedProductInfo(1L, 2L);
+        productInfo = new VisitedProductInfo(1L, 2L);
         message = new ObjectMapper().writeValueAsString(productInfo);
     }
 
@@ -57,7 +51,7 @@ public class QueueListenerTest {
         rabbitTemplate.send("statisticQueue", new Message(message.getBytes()));
 
         await().atMost(5, TimeUnit.SECONDS).untilAsserted(() ->
-                verify(statisticService).saveProductPageVisit(message));
+                verify(statisticService).saveProductPageVisit(productInfo.getProductId()));
     }
 
     @Test
@@ -66,6 +60,6 @@ public class QueueListenerTest {
         rabbitTemplate.send("otherQueue", new Message(message.getBytes()));
 
         await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
-                verify(statisticService, never()).saveProductPageVisit(anyString()));
+                verify(statisticService, never()).saveProductPageVisit(anyLong()));
     }
 }

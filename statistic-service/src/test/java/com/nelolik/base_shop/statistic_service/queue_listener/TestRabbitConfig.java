@@ -1,22 +1,14 @@
-package com.nelolik.base_shop.statistic_service;
+package com.nelolik.base_shop.statistic_service.queue_listener;
 
 
-import com.nelolik.base_shop.statistic_service.mapper.ProductStatisticMapper;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.TestPropertySource;
-import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.io.IOException;
-import java.io.Reader;
 
 @TestConfiguration
 @Testcontainers

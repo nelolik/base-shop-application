@@ -1,4 +1,4 @@
-package com.nelolik.base_shop.statistic_service;
+package com.nelolik.base_shop.statistic_service.queue_listener;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

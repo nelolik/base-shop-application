@@ -7,6 +7,7 @@
     </properties>
     <settings><!--в данном блоке можно настроить много параметров. Полный список параметров http://mybatis.github.io/mybatis-3/configuration.html#settings-->
         <setting name="logImpl" value="SLF4J"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <environments default="test"><!--в данном блоке настраиваются подключения к БД-->
         <environment id="development">

@@ -1,0 +1,16 @@
+package com.nelolik.base_shop.statistic_service.model;
+
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+public class VisitedProductInfo {
+
+    private Long productId;
+
+    private Long userId;
+}

@@ -17,6 +17,8 @@ public class UserStatisticServiceImpl implements UserStatisticService {
 
     private final UserVisitStatisticMapper userMapper;
 
+    @Value("${countOfFavoriteUsersProducts}")
+    private int countOfMostViewedIds;
     @Override
     public void saveUserProductPageView(long userId, long productId) {
         UserVisitStatistic prevUserRecord = userMapper.getUserProductStatistic(userId, productId);
@@ -31,7 +33,6 @@ public class UserStatisticServiceImpl implements UserStatisticService {
     @Override
     @Cacheable(value = CacheNames.MOST_VIEWED_BY_USER, key = "#userId")
     public List<Long> getMostViewedByUserIds(long userId) {
-        int count = 10; //TODO remove magic number
-        return userMapper.getProductsMostOftenVisitedByUser(userId, count);
+        return userMapper.getProductsMostOftenVisitedByUser(userId, countOfMostViewedIds);
     }
 }

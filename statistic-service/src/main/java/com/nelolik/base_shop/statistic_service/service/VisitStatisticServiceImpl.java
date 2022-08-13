@@ -19,6 +19,9 @@ public class VisitStatisticServiceImpl implements VisitStatisticService{
 
     private final ProductStatisticMapper productMapper;
 
+    @Value("${countOfMostVisitedProducts}")
+    private long countOfRecommendations;
+
     @Override
 //    @CacheEvict(value = CacheNames.PRODUCT_STATISTIC, key = "#productIds")
     public void saveProductPageVisit(long productId) {
@@ -43,7 +46,6 @@ public class VisitStatisticServiceImpl implements VisitStatisticService{
     @Override
     @Cacheable(CacheNames.MOST_VISITED)
     public List<Long> getMostVisitedProducts() {
-        long countOfRecommendations = 10; //TODO replace magic number
         return productMapper.getMostViewedProductIds(countOfRecommendations);
     }
 

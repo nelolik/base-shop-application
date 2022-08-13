@@ -3,6 +3,8 @@ package com.nelolik.base_shop.productservice.model;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -14,5 +16,5 @@ public class ProductShort {
 
     private String  name;
 
-    private Double price;
+    private BigDecimal price;
 }

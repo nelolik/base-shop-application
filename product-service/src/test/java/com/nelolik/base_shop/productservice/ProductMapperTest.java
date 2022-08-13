@@ -10,6 +10,7 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,7 +41,7 @@ public class ProductMapperTest {
     @Test
     void testGetProductById() {
         Product expected = new Product(1L, "toothpaste", "gel too clean tooth",
-                200., 22, "health");
+                new BigDecimal("200.30"), 22, "health");
         Product product = productMapper.getProductById(1L);
         Assertions.assertEquals(expected, product);
     }
@@ -48,7 +49,7 @@ public class ProductMapperTest {
     @Test
     void testGetProductByCategory() {
         Product expected = new Product(1L, "toothpaste", "gel too clean tooth",
-                200., 22, "health");
+                new BigDecimal("200.30"), 22, "health");
         List<Product> healthCategory = productMapper.getProductsByCategory("health");
         assertThat(healthCategory).isNotNull().contains(expected);
     }
@@ -56,7 +57,7 @@ public class ProductMapperTest {
     @Test
     void testSaveProduct() {
         Product newProduct = new Product(4L, "new name", "Something very useful",
-                1000., 5, "New category");
+                new BigDecimal("1000.00"), 5, "New category");
 
         productMapper.saveProduct(newProduct);
 

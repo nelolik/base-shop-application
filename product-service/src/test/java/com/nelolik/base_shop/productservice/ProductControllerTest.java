@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,14 +34,14 @@ public class ProductControllerTest {
     private ProductService productService;
 
     private static long ID = 1;
-    private static Product p1 = new Product(ID++, "toothpaste", "gel too clean tooth",
-            200., 22, "health");
-    private static Product p2 = new Product(ID++, "pen", "a thing to write on paper",
-            80., 77, "office");
-    private static Product p3 = new Product(ID++, "beacon", "tasty thing",
-            350., 7, "food");
-    private static List<Product> productList = List.of(p1, p2, p3);
-    private static List<ProductShort> productShortList = new ArrayList<>();
+    private static final Product p1 = new Product(ID++, "toothpaste", "gel too clean tooth",
+            BigDecimal.valueOf(200.10), 22, "health");
+    private static final Product p2 = new Product(ID++, "pen", "a thing to write on paper",
+            BigDecimal.valueOf(80.35), 77, "office");
+    private static final Product p3 = new Product(ID++, "beacon", "tasty thing",
+            BigDecimal.valueOf(349.99), 7, "food");
+    private static final List<Product> productList = List.of(p1, p2, p3);
+    private static final List<ProductShort> productShortList = new ArrayList<>();
 
     @BeforeAll
     static void init() {

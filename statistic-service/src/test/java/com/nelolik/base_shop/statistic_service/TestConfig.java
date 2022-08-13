@@ -1,6 +1,7 @@
-package com.nelolik.base_shop.statistic_service.mapper;
+package com.nelolik.base_shop.statistic_service;
 
 import com.nelolik.base_shop.statistic_service.mapper.ProductStatisticMapper;
+import com.nelolik.base_shop.statistic_service.mapper.UserVisitStatisticMapper;
 import com.nelolik.base_shop.statistic_service.model.UserVisitStatistic;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;

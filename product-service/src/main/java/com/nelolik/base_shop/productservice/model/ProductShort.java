@@ -3,6 +3,7 @@ package com.nelolik.base_shop.productservice.model;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Setter
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class ProductShort {
+public class ProductShort implements Serializable {
 
     private Long id;
 

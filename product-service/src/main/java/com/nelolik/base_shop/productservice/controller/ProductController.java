@@ -57,6 +57,4 @@ public class ProductController {
         }
         return productService.getProductsContainingInName(searchedText);
     }
-
-
 }

@@ -12,7 +12,7 @@ public interface ProductMapper {
     @Select("SELECT * FROM product p")
     List<Product> getProducts();
 
-    @Select("SELECT p.id, p.name, p.price FROM product p")
+    @Select("SELECT p.id, p.name, p.price FROM product p LIMIT 50")
     List<ProductShort> getProductsForBar();
 
     @Select("SELECT * FROM product WHERE id = #{id}")

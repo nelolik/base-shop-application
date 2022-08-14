@@ -13,11 +13,11 @@ import java.io.IOException;
 import java.io.Reader;
 
 @TestConfiguration
-@TestPropertySource("classpath:test.properties")
+@TestPropertySource("classpath:application.properties")
 public class TestConfig {
 
     @Bean
-    ProductMapper productMapper() throws IOException {
+    public ProductMapper productMapper() throws IOException {
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
         return sessionFactory.openSession().getMapper(ProductMapper.class);

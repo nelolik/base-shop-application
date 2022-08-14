@@ -2,7 +2,6 @@ package com.nelolik.base_shop.statistic_service.service;
 
 import com.nelolik.base_shop.statistic_service.mapper.ProductStatisticMapper;
 import com.nelolik.base_shop.statistic_service.model.ProductStatistic;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

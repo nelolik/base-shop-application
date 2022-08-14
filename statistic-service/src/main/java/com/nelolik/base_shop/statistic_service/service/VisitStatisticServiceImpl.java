@@ -23,7 +23,7 @@ public class VisitStatisticServiceImpl implements VisitStatisticService{
     private long countOfRecommendations;
 
     @Override
-//    @CacheEvict(value = CacheNames.PRODUCT_STATISTIC, key = "#productIds")
+    @CacheEvict(value = CacheNames.PRODUCT_STATISTIC, key = "#productId")
     public void saveProductPageVisit(long productId) {
         ProductStatistic previousProductRecord = productMapper.getProductStatisticByProductId(productId);
         if (previousProductRecord != null) {

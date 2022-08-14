@@ -3,18 +3,12 @@ package com.nelolik.base_shop.statistic_service.mapper;
 import com.nelolik.base_shop.statistic_service.model.ProductStatistic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import javax.sql.DataSource;
 
 
 @MybatisTest
-//@ContextConfiguration(classes = {TestConfig.class})
 @Sql(scripts = {"classpath:/drop_statistic_table.sql", "classpath:/create_table.sql",
         "classpath:/fill_statistic_table.sql"})
 public class ProductStatisticMapperTest {

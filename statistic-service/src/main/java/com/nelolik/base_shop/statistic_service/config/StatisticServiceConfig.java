@@ -22,7 +22,6 @@ import org.springframework.core.env.Environment;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 @Configuration

@@ -22,5 +22,6 @@
     </environments>
     <mappers>
         <mapper class="com.nelolik.base_shop.statistic_service.mapper.ProductStatisticMapper"/>
+        <mapper class="com.nelolik.base_shop.statistic_service.mapper.UserVisitStatisticMapper"/>
     </mappers>
 </configuration>

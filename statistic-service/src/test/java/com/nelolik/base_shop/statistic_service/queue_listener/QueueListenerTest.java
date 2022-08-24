@@ -3,18 +3,24 @@ package com.nelolik.base_shop.statistic_service.queue_listener;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nelolik.base_shop.statistic_service.TestRabbitConfig;
 import com.nelolik.base_shop.statistic_service.listener.StatisticQueueListener;
+import com.nelolik.base_shop.statistic_service.mapper.ProductStatisticMapper;
+import com.nelolik.base_shop.statistic_service.mapper.UserVisitStatisticMapper;
 import com.nelolik.base_shop.statistic_service.model.VisitedProductInfo;
+import com.nelolik.base_shop.statistic_service.service.UserStatisticService;
 import com.nelolik.base_shop.statistic_service.service.VisitStatisticService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.test.context.TestPropertySource;
+import org.testcontainers.shaded.org.awaitility.Durations;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,18 +29,30 @@ import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 
 @SpringBootTest
-@Testcontainers
-@ContextConfiguration(classes = TestRabbitConfig.class)
+@TestPropertySource("classpath:test.properties")
+@ContextConfiguration(classes = {TestRabbitConfig.class})
 public class QueueListenerTest {
 
     @Autowired
     private StatisticQueueListener listener;
 
     @MockBean
-    private VisitStatisticService statisticService;
+    private VisitStatisticService visitStatisticService;
+
+    @MockBean
+    private UserStatisticService userStatisticService;
+
+    @MockBean
+    private ProductStatisticMapper productStatisticMapper;
+
+    @MockBean
+    private UserVisitStatisticMapper userVisitStatisticMapper;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private Queue queue;
 
     private static VisitedProductInfo productInfo;
     private static String message;
@@ -45,13 +63,16 @@ public class QueueListenerTest {
         message = new ObjectMapper().writeValueAsString(productInfo);
     }
 
+
+
     @Test
     void listenerReceiveMessageFromTargetQueue() {
 
-        rabbitTemplate.send("statisticQueue", new Message(message.getBytes()));
+        rabbitTemplate.send(queue.getName(), new Message(message.getBytes()));
 
-        await().atMost(5, TimeUnit.SECONDS).untilAsserted(() ->
-                verify(statisticService).saveProductPageVisit(productInfo.getProductId()));
+
+        await().atMost(3, TimeUnit.SECONDS).untilAsserted(() ->
+                verify(visitStatisticService).saveProductPageVisit(productInfo.getProductId()));
     }
 
     @Test
@@ -59,7 +80,7 @@ public class QueueListenerTest {
 
         rabbitTemplate.send("otherQueue", new Message(message.getBytes()));
 
-        await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
-                verify(statisticService, never()).saveProductPageVisit(anyLong()));
+        await().timeout(Durations.ONE_SECOND)
+                .untilAsserted(() -> verifyNoInteractions(visitStatisticService));
     }
 }

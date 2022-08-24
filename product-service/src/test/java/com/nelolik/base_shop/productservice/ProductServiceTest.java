@@ -18,6 +18,7 @@ import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.LongStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -51,10 +52,9 @@ public class ProductServiceTest {
         }
 
         products = new ArrayList<>();
-        for (long i = 1; i < 10; i++) {
-            products.add(new Product(i, "name" + 1, "description " + i, new BigDecimal(i * 100),
-                    (int)i, category));
-        }
+        LongStream.range(1, 10).forEach(i ->
+                products.add(new Product(i, "name" + 1, "description " + i, new BigDecimal(i * 100),
+                (int)i, category)));
     }
 
     @PostConstruct

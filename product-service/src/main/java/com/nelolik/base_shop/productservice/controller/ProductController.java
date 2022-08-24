@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class ProductController {
     public List<Product> getProducts() {
         List<Product> products = productService.getProducts();
         if (products == null) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         return products;
     }
@@ -32,7 +33,7 @@ public class ProductController {
     public List<ProductShort> getProductListForBar() {
         List<ProductShort> products = productService.getProductsForBar();
         if (products == null) {
-            products = new ArrayList<>();
+            products = Collections.emptyList();
         }
         return products;
     }
@@ -45,7 +46,7 @@ public class ProductController {
     @GetMapping("/category/{category}")
     public List<Product> getProductsByCategory(@PathVariable("category") String category) {
         if (category == null) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         return productService.getProductsByCategory(category);
     }
@@ -53,7 +54,7 @@ public class ProductController {
     @GetMapping("search/{text}")
     public List<ProductShort> getSearchedProducts(@PathVariable("text") String searchedText) {
         if (searchedText == null) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         return productService.getProductsContainingInName(searchedText);
     }

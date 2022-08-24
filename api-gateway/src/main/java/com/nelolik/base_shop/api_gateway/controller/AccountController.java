@@ -8,15 +8,15 @@ import java.util.List;
 public class AccountController {
 
     public List<Object> getListOfOrders() {
-        return null;//TODO
+        throw new UnsupportedOperationException("Not implemented yet");//TODO
     }
 
     public List<Object> getUnfinishedOrders() {
-        return null;//TODO
+        throw new UnsupportedOperationException("Not implemented yet");//TODO
     }
 
     public Integer getBonusesCount() {
-        return null;//TODO
+        throw new UnsupportedOperationException("Not implemented yet");//TODO
     }
 
 

@@ -13,11 +13,13 @@ public class BasketController {
 
     @GetMapping("/list")
     public List<ProductShort> getListOfOrderedProducts() {
-        return null; //TODO
+        throw new UnsupportedOperationException("Not implemented yet");
+        //TODO
     }
 
     @PostMapping("/add")
     public void addProductToBasket() {
+        throw new UnsupportedOperationException("Not implemented yet");
         //TODO arguments id and count
     }
 

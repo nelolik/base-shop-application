@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductShort> getPopularProductsForBar() {
         //TODO service, which defines products, that should be on main page
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override

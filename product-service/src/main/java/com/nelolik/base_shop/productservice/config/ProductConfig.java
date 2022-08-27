@@ -5,6 +5,8 @@ import com.nelolik.base_shop.productservice.mapper.ProductMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,8 @@ import java.time.Duration;
 @Configuration
 public class ProductConfig {
 
+    @Value("${queue.name.statistic}")
+    private String queueName;
     @Bean
     public ProductMapper productMapper() throws IOException {
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
@@ -43,5 +47,10 @@ public class ProductConfig {
                         RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(12)))
                 .withCacheConfiguration(ProductCachNames.BY_ID,
                         RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(12)));
+    }
+
+    @Bean
+    public Queue statisticQueue() {
+        return new Queue(queueName, false);
     }
 }

@@ -3,6 +3,7 @@ package com.nelolik.base_shop.productservice.controller;
 import com.nelolik.base_shop.productservice.model.ProductShort;
 import com.nelolik.base_shop.productservice.service.ProductService;
 import com.nelolik.base_shop.productservice.model.Product;
+import com.nelolik.base_shop.productservice.service.StatisticService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+
+    private final StatisticService statisticService;
 
     @GetMapping()
     public List<Product> getProducts() {
@@ -40,7 +43,9 @@ public class ProductController {
 
     @GetMapping("/id/{id}")
     public Product getProductById(@PathVariable("id") long id) {
-        return productService.getProductById(id);
+        Product product = productService.getProductById(id);
+        statisticService.saveProductVisitWithoutUserInfo(product);
+        return product;
     }
 
     @GetMapping("/category/{category}")

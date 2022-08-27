@@ -29,9 +29,11 @@ public class StatisticQueueListener {
             objectMapper = new ObjectMapper();
             VisitedProductInfo productInfo = this.objectMapper.readValue(message, VisitedProductInfo.class);
             long productId = productInfo.getProductId();
-            long userId = productInfo.getUserId();
             visitStatisticService.saveProductPageVisit(productId);
-            userStatisticService.saveUserProductPageView(productId, userId);
+            Long userId = productInfo.getUserId();
+            if (userId != null) {
+                userStatisticService.saveUserProductPageView(userId, productId);
+            }
         } catch (JsonProcessingException e) {
             log.error("Error parsing json string to VisitedProductInfo. Input string: '{}'", message);
             throw new RuntimeException(e);

@@ -73,6 +73,9 @@ public class QueueListenerTest {
 
         await().atMost(3, TimeUnit.SECONDS).untilAsserted(() ->
                 verify(visitStatisticService).saveProductPageVisit(productInfo.getProductId()));
+
+        verify(visitStatisticService).saveProductPageVisit(productInfo.getProductId());
+        verify(userStatisticService).saveUserProductPageView(productInfo.getUserId(), productInfo.getProductId());
     }
 
     @Test
@@ -82,5 +85,20 @@ public class QueueListenerTest {
 
         await().timeout(Durations.ONE_SECOND)
                 .untilAsserted(() -> verifyNoInteractions(visitStatisticService));
+    }
+
+    @Test
+    void listenerReceiveMessageWithNullUserId() throws JsonProcessingException {
+        VisitedProductInfo infoWithNull = new VisitedProductInfo(1L, null);
+        String json = new ObjectMapper().writeValueAsString(infoWithNull);
+
+        rabbitTemplate.send(queue.getName(), new Message(json.getBytes()));
+
+
+        await().atMost(3, TimeUnit.SECONDS).untilAsserted(() ->
+                verify(visitStatisticService).saveProductPageVisit(productInfo.getProductId()));
+
+        verify(visitStatisticService).saveProductPageVisit(productInfo.getProductId());
+        verify(userStatisticService, never()).saveUserProductPageView(anyLong(), anyLong());
     }
 }

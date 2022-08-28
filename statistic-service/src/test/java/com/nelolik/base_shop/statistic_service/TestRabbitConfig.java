@@ -26,8 +26,6 @@ public class TestRabbitConfig {
 
     @Bean
     public CachingConnectionFactory connectionFactoryTest(RabbitMQContainer queueContainer) {
-        Integer mappedPort = queueContainer.getMappedPort(DEFAULT_HTTP_PORT);
-        System.out.println("Port 15672 mapped to: " + mappedPort);
         return new CachingConnectionFactory(queueContainer.getHost(),
                 queueContainer.getMappedPort(DEFAULT_AMQP_PORT));
     }

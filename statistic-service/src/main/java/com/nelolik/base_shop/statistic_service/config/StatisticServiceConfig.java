@@ -41,7 +41,7 @@ public class StatisticServiceConfig {
     private Environment environment;
 
     @Bean
-    Queue statisticQueue() {
+    public Queue statisticQueue() {
         return new Queue(queueName  , false);
     }
 
@@ -53,21 +53,21 @@ public class StatisticServiceConfig {
     }
 
     @Bean
-    ProductStatisticMapper productMapper() throws IOException {
+    public ProductStatisticMapper productMapper() throws IOException {
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
         return sessionFactory.openSession().getMapper(ProductStatisticMapper.class);
     }
 
     @Bean
-    UserVisitStatisticMapper userVisitStatisticMapper() throws IOException {
+    public UserVisitStatisticMapper userVisitStatisticMapper() throws IOException {
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
         return sessionFactory.openSession().getMapper(UserVisitStatisticMapper.class);
     }
 
     @Bean
-    CacheManager cacheManager() {
+    public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager(CacheNames.PRODUCT_STATISTIC, CacheNames.MOST_VISITED,
                 CacheNames.MOST_VIEWED_BY_USER) {
             @Override
@@ -78,4 +78,5 @@ public class StatisticServiceConfig {
             }
         };
     }
+
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nelolik.base_shop.productservice.model.Product;
 import com.nelolik.base_shop.productservice.model.ProductShort;
 import com.nelolik.base_shop.productservice.service.ProductService;
+import com.nelolik.base_shop.productservice.service.StatisticService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -32,6 +33,9 @@ public class ProductControllerTest {
 
     @MockBean
     private ProductService productService;
+
+    @MockBean
+    private StatisticService statisticService;
 
     private static long ID = 1;
     private static final Product p1 = new Product(ID++, "toothpaste", "gel too clean tooth",
@@ -81,6 +85,9 @@ public class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(content().string(containsString(new ObjectMapper().writeValueAsString(p1))));
+
+        verify(productService, times(1)).getProductById(id);
+        verify(statisticService, times(1)).saveProductVisitWithoutUserInfo(p1);
     }
 
     @Test

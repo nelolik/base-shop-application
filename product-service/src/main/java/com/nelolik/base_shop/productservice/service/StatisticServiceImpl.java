@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,9 +22,6 @@ public class StatisticServiceImpl implements StatisticService {
 
     private final ObjectMapper objectMapper;
 
-    @Value("queue.name.statistic")
-    private String queueName;
-
     @Override
     public void saveProductVisitWithoutUserInfo(Product product) {
         VisitedProductInfo visitedProductInfo = new VisitedProductInfo(product.getId(), null);
@@ -33,8 +29,8 @@ public class StatisticServiceImpl implements StatisticService {
             String message = objectMapper.writeValueAsString(visitedProductInfo);
             rabbitTemplate.send(statisticQueue.getName(), new Message(message.getBytes()));
         } catch (JsonProcessingException e) {
-            log.error(String.format("Error parsing VisitProductInfo with productId=%d and userId=%d to json string.",
-                    product.getId(), null).toString());
+            log.error(String.format("Error parsing VisitProductInfo with productId=%d and userId=null to json string.",
+                    product.getId()));
             throw new RuntimeException(e);
         }
     }
@@ -47,7 +43,7 @@ public class StatisticServiceImpl implements StatisticService {
             rabbitTemplate.send(statisticQueue.getName(), new Message(message.getBytes()));
         } catch (JsonProcessingException e) {
             log.error(String.format("Error parsing VisitProductInfo with productId=%d and userId=%d to json string.",
-                    product.getId(), null).toString());
+                    product.getId(), userId));
             throw new RuntimeException(e);
         }
     }

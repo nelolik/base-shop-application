@@ -32,6 +32,7 @@
         <module>api-gateway</module>
         <module>catalog-service</module>
         <module>statistic-service</module>
+        <module>basket-service</module>
     </modules>
 
     <properties>

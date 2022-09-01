@@ -15,7 +15,7 @@ import java.util.Arrays;
 @Aspect
 @Component
 @Slf4j
-public class ControllersLogging {
+public class ApiRequestLogging {
 
     @Autowired
     HttpServletRequest request;
@@ -25,7 +25,7 @@ public class ControllersLogging {
 
     @Before("controllerPointcut()")
     public void doBeforeRequestHandle(JoinPoint joinPoint) {
-        log.info("\nRequestURI={},Method={},\nParameterMap={}", request.getRequestURI(), request.getMethod(),
+        log.info(" RequestURI={},Method={},ParameterMap={}", request.getRequestURI(), request.getMethod(),
                 Arrays.toString(joinPoint.getArgs()));
     }
 

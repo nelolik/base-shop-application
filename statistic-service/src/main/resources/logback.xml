@@ -22,7 +22,7 @@
         <generateId>true</generateId>
         <charset>UTF-8</charset>
         <durable>false</durable>
-        <deliveryMode>NOT_PERSISTENT</deliveryMode>
+        <deliveryMode>NON_PERSISTENT</deliveryMode>
         <declareExchange>true</declareExchange>
         <addMdcAsHeaders>false</addMdcAsHeaders>
     </appender>

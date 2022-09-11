@@ -21,8 +21,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductShort> getPopularProductsForBar() {
-        //TODO service, which defines products, that should be on main page
-        throw new UnsupportedOperationException("Not implemented yet");
+        WebClient client = WebClient.create(uris.getProductsForBar());
+        return client.get().retrieve().toEntityList(ProductShort.class)
+                .doOnError(e -> log.error(String.format("Error retrieve list of most popular ids. /n{}"
+                        + e.getMessage())))
+                .block().getBody();
     }
 
     @Override

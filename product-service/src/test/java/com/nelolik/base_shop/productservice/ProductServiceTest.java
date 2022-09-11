@@ -1,5 +1,8 @@
 package com.nelolik.base_shop.productservice;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.tomakehurst.wiremock.WireMockServer;
 import com.nelolik.base_shop.productservice.mapper.ProductMapper;
 import com.nelolik.base_shop.productservice.model.Product;
 import com.nelolik.base_shop.productservice.model.ProductShort;
@@ -18,8 +21,11 @@ import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -38,11 +44,15 @@ public class ProductServiceTest {
     @MockBean
     private ProductMapper productMapper;
 
+    private static WireMockServer wireMockServer;
+
+    private static final int port = 8083;
+
     private static List<ProductShort> shorts;
 
     private static List<Product> products;
 
-    private static String category = "category";
+    private static final String category = "category";
 
     @BeforeAll
     static void beforeAll() {
@@ -55,6 +65,9 @@ public class ProductServiceTest {
         LongStream.range(1, 10).forEach(i ->
                 products.add(new Product(i, "name" + 1, "description " + i, new BigDecimal(i * 100),
                 (int)i, category)));
+
+        wireMockServer = new WireMockServer(port);
+        wireMockServer.start();
     }
 
     @PostConstruct
@@ -67,22 +80,34 @@ public class ProductServiceTest {
     @PreDestroy
     public void preDestroy() {
         redisServer.stop();
+        wireMockServer.stop();
     }
 
     @Test
-    void getProductsForBarTest() {
-        when(productMapper.getProductsForBar()).thenReturn(shorts);
+    void getProductsForBarTest() throws JsonProcessingException {
+        List<Long> recommendedIds = List.of(2L, 4L, 6L);
+        List<ProductShort> response = shorts.stream().filter(p -> recommendedIds.contains(p.getId()))
+                .collect(Collectors.toList());
+
+        wireMockServer.stubFor(get("/statistic/recommendation")
+                .willReturn(aResponse().withStatus(201)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(new ObjectMapper().writeValueAsString(recommendedIds))));
+
+        when(productMapper.findProductShortsByIds(recommendedIds)).thenReturn(response);
 
         List<ProductShort> result = productService.getProductsForBar();
 
-        assertThat(result).isNotNull().isEqualTo(shorts);
-        verify(productMapper, times(1)).getProductsForBar();
+        assertThat(result).isNotNull().isEqualTo(response);
+        verify(productMapper, never()).getProductsForBar();
+        verify(productMapper, times(1)).findProductShortsByIds(recommendedIds);
 
         reset(productMapper);
         List<ProductShort> result2 = productService.getProductsForBar();
 
-        assertThat(result2).isNotNull().isEqualTo(shorts);
+        assertThat(result2).isNotNull().isEqualTo(response);
         verify(productMapper, never()).getProductsForBar();
+        verify(productMapper, never()).findProductShortsByIds(anyList());
     }
 
     @Test

@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -92,5 +94,24 @@ public class ProductMapperTest {
 
         List<ProductShort> result4 = productMapper.findProductsContainingInName("absent");
         assertThat(result4).isNotNull().isEmpty();
+    }
+
+    @Test
+    void findProductShortsByIdsShouldReturnExistingRecords() {
+        List<Long> ids = List.of(2L, 3L);
+
+        List<ProductShort> result = productMapper.findProductShortsByIds(ids);
+
+        assertThat(result).isNotNull().extracting(ProductShort::getId).containsExactlyElementsOf(ids);
+    }
+
+    @Test
+    void findProductShortsByIdsShouldReturnOnlyExistingRecords() {
+        List<Long> ids = List.of(2L, 3L, 15L, 25L);
+
+        List<ProductShort> result = productMapper.findProductShortsByIds(ids);
+
+        assertThat(result).isNotNull().hasSize(2)
+                .extracting(ProductShort::getId).containsExactly(2L, 3L);
     }
 }

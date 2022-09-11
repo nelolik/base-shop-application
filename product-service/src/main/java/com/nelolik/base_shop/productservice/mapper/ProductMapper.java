@@ -30,4 +30,11 @@ public interface ProductMapper {
 
     @Select("SELECT p.id, p.name, p.price FROM product p WHERE p.name LIKE '%'||#{s}||'%'")
     List<ProductShort> findProductsContainingInName(@Param("s") String searchText);
+
+    @Select("<script> SELECT p.id, p.name, p.price FROM product p WHERE id IN " +
+            "    <foreach item='item' index='index' collection='ids' " +
+                    " open='(' separator=',' close=')'> " +
+                    " #{item} " +
+            "    </foreach> </script>")
+    List<ProductShort> findProductShortsByIds(@Param("ids") List<Long> ids);
 }

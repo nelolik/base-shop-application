@@ -3,7 +3,6 @@ package com.nelolik.base_shop.api_gateway.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
 import com.nelolik.base_shop.api_gateway.model.Product;
 import com.nelolik.base_shop.api_gateway.model.ProductShort;
 import org.junit.jupiter.api.AfterAll;
@@ -33,8 +32,8 @@ public class ProductServiceTest {
     private Product p3 = new Product(ID++, "third", "description3", 3.4, 45, "category2");
 
     private List<Product> productList = List.of(p1, p2, p3);
-    private List<ProductShort> shorts = productList.stream().map(p -> new ProductShort(p.getId(), p.getName(), p.getPrice()))
-            .collect(Collectors.toList());
+    private List<ProductShort> shorts = productList.stream()
+            .map(p -> new ProductShort(p.getId(), p.getName(), p.getPrice())).toList();
 
     @BeforeAll
     static void init() {

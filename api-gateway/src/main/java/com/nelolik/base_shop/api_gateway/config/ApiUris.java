@@ -16,4 +16,5 @@ public class ApiUris {
     private String productCategory;
     private String productId;
     private String productSearch;
+    private String productsForBar;
 }

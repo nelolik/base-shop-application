@@ -24,6 +24,9 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Override
     public void saveProductVisitWithoutUserInfo(Product product) {
+        if (product == null) {
+            return;
+        }
         VisitedProductInfo visitedProductInfo = new VisitedProductInfo(product.getId(), null);
         try {
             String message = objectMapper.writeValueAsString(visitedProductInfo);
@@ -37,6 +40,9 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Override
     public void saveProductVisitWithUserInfo(Product product, long userId) {
+        if (product == null) {
+            return;
+        }
         VisitedProductInfo visitedProductInfo = new VisitedProductInfo(product.getId(), userId);
         try {
             String message = objectMapper.writeValueAsString(visitedProductInfo);

@@ -5,8 +5,10 @@ import com.nelolik.base_shop.productservice.mapper.ProductMapper;
 import com.nelolik.base_shop.productservice.model.ProductShort;
 import com.nelolik.base_shop.productservice.model.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -14,6 +16,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+
+    @Value("${uri.productsRecommendation}")
+    private String URI_RECOMMENDED_PRODUCTS_IDS;
 
     private final ProductMapper productMapper;
 
@@ -25,6 +30,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Cacheable(ProductCachNames.FOR_BAR)
     public List<ProductShort> getProductsForBar() {
+        WebClient client = WebClient.create(URI_RECOMMENDED_PRODUCTS_IDS);
+        List<Long> ids = client.get().retrieve().toEntityList(Long.class)
+                .block().getBody();
+        if (ids != null) {
+            return productMapper.findProductShortsByIds(ids);
+        }
         return productMapper.getProductsForBar();
     }
 

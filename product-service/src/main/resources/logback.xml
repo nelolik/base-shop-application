@@ -8,8 +8,6 @@
         </encoder>
     </appender>
 
-
-
     <appender name="AMQP" class="org.springframework.amqp.rabbit.logback.AmqpAppender">
         <layout>
             <pattern><![CDATA[ %d %p %t [%c] - <%m>%n ]]></pattern>
@@ -17,7 +15,7 @@
         <addresses>localhost:5672</addresses>
         <abbreviation>36</abbreviation>
         <includeCallerData>false</includeCallerData>
-        <applicationId>statistic</applicationId>
+        <applicationId>product</applicationId>
         <routingKeyPattern>logs.%property{applicationId}.%p</routingKeyPattern>
         <generateId>true</generateId>
         <charset>UTF-8</charset>
@@ -27,11 +25,10 @@
         <addMdcAsHeaders>false</addMdcAsHeaders>
     </appender>
 
-
-
     <logger name="com.nelolik.base_shop.statistic_service.mapper.ProductStatisticMapper">
         <level value="info"/>
     </logger>
+
     <root level="INFO">
         <appender-ref ref="AMQP"/>
         <appender-ref ref="stdout"/>

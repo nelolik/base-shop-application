@@ -114,4 +114,13 @@ public class ProductMapperTest {
         assertThat(result).isNotNull().hasSize(2)
                 .extracting(ProductShort::getId).containsExactly(2L, 3L);
     }
+
+    @Test
+    void getProductShortByIdTest() {
+        ProductShort expected = new ProductShort(2L, "pen", BigDecimal.valueOf(8000, 2));
+
+        ProductShort result = productMapper.getProductShortById(expected.getId());
+
+        assertThat(result).isNotNull().isEqualTo(expected);
+    }
 }

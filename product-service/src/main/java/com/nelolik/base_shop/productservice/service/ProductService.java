@@ -11,6 +11,10 @@ public interface ProductService {
 
     List<ProductShort> getProductsForBar();
 
+    List<ProductShort> getProductShortsByListOfId(List<Long> ids);
+
+    ProductShort getProductShortById(long id);
+
     Product getProductById(long id);
 
     List<Product> getProductsByCategory(String category);

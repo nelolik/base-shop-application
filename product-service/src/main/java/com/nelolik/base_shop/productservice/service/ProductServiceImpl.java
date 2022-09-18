@@ -40,6 +40,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductShort> getProductShortsByListOfId(List<Long> ids) {
+        return productMapper.findProductShortsByIds(ids);
+    }
+
+    @Override
+    public ProductShort getProductShortById(long id) {
+        return productMapper.getProductShortById(id);
+    }
+
+    @Override
     @Cacheable(value = ProductCachNames.BY_ID, key = "#id")
     public Product getProductById(long id) {
         return productMapper.getProductById(id);

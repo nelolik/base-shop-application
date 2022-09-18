@@ -1,17 +1,20 @@
 package com.nelolik.base_shop.productservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nelolik.base_shop.productservice.model.ProductShort;
 import com.nelolik.base_shop.productservice.service.ProductService;
 import com.nelolik.base_shop.productservice.model.Product;
 import com.nelolik.base_shop.productservice.service.StatisticService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
@@ -21,6 +24,8 @@ public class ProductController {
     private final ProductService productService;
 
     private final StatisticService statisticService;
+
+    private final ObjectMapper objectMapper;
 
     @GetMapping()
     public List<Product> getProducts() {
@@ -40,11 +45,24 @@ public class ProductController {
         return products;
     }
 
+    @GetMapping("/for_bar/with_ids")
+    public List<ProductShort> getProductShortsWithRequestedIds(@RequestParam("ids") String ids) {
+        String[] splited = ids.split(",");
+        List<Long> requestedIds = Arrays.stream(splited).filter(NumberUtils::isCreatable)
+                .map(Long::valueOf).collect(Collectors.toList());
+        return productService.getProductShortsByListOfId(requestedIds);
+    }
+
     @GetMapping("/id/{id}")
     public Product getProductById(@PathVariable("id") long id) {
         Product product = productService.getProductById(id);
         statisticService.saveProductVisitWithoutUserInfo(product);
         return product;
+    }
+
+    @GetMapping("/short/id/{id}")
+    public ProductShort getProductShortById(@PathVariable("id") long id) {
+        return productService.getProductShortById(id);
     }
 
     @GetMapping("/category/{category}")

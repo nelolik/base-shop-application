@@ -37,4 +37,7 @@ public interface ProductMapper {
                     " #{item} " +
             "    </foreach> </script>")
     List<ProductShort> findProductShortsByIds(@Param("ids") List<Long> ids);
+
+    @Select("SELECT p.id, p.name, p.price FROM product p WHERE id=#{id}")
+    ProductShort getProductShortById(@Param("id") Long id);
 }

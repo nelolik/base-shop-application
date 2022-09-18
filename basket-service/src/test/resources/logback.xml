@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%5level [%thread] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.nelolik.base_shop.basket_service.db.mapper.UserBasketDbMapper">
+        <level value="trace"/>
+    </logger>
+    <root >
+        <appender-ref ref="stdout"/>
+    </root>
+
+</configuration>

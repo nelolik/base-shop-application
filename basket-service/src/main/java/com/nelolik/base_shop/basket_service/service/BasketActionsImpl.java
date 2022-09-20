@@ -1,7 +1,6 @@
 package com.nelolik.base_shop.basket_service.service;
 
 import com.nelolik.base_shop.basket_service.model.basket.Basket;
-import com.nelolik.base_shop.basket_service.model.basket.BasketItem;
 import com.nelolik.base_shop.basket_service.model.basket.BasketItemDTO;
 import com.nelolik.base_shop.basket_service.model.product.ProductShort;
 import com.nelolik.base_shop.basket_service.db.mapper.BasketDbMapper;
@@ -48,9 +47,10 @@ public class BasketActionsImpl implements BasketActions {
     private void validateProducts(Long basketId) {
         Basket basket = Basket.getBasketById(basketDb, basketId);
         List<ProductShort> productList = basket.getProductList();
-        List<Long> productIds = productList.stream().map(ProductShort::getId).collect(Collectors.toList());
+        String ids = productList.stream().map(ProductShort::getId).map(Object::toString)
+                .collect(Collectors.joining(","));
         WebClient webClient = WebClient.create("http://localhost:8081/products/for_bar/with_ids");
-        List<ProductShort> products = webClient.get().attribute("ids", productList)
+        List<ProductShort> products = webClient.get().attribute("ids", ids)
                 .retrieve().bodyToFlux(ProductShort.class).collectList().block();
         if (products == null) {
             log.error("Error getting ProductShort list for validating. " +

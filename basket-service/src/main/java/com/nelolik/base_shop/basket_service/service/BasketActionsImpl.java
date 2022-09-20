@@ -1,9 +1,9 @@
 package com.nelolik.base_shop.basket_service.service;
 
 import com.nelolik.base_shop.basket_service.model.basket.Basket;
+import com.nelolik.base_shop.basket_service.model.basket.BasketDb;
 import com.nelolik.base_shop.basket_service.model.basket.BasketItemDTO;
 import com.nelolik.base_shop.basket_service.model.product.ProductShort;
-import com.nelolik.base_shop.basket_service.db.mapper.BasketDbMapper;
 import com.nelolik.base_shop.basket_service.db.mapper.UserBasketDbMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class BasketActionsImpl implements BasketActions {
 
     private final UserBasketDbMapper userBasketDb;
 
-    private final BasketDbMapper basketDb;
+    private final BasketDb basketDb;
 
     private static final ZoneOffset DEFAULT_OFFSET = ZoneOffset.from(ZoneOffset.UTC);
 

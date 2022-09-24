@@ -1,7 +1,7 @@
 package com.nelolik.base_shop.basket_service.db.mapper;
 
 
-import com.nelolik.base_shop.basket_service.model.basket.BasketDBO;
+import com.nelolik.base_shop.basket_service.model.dto.BasketDBO;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +79,23 @@ public class BasketDbMapperTest {
 
         List<BasketDBO> updated = mapper.getBasketItemsById(2l);
         assertThat(updated).isNotNull().containsExactlyInAnyOrderElementsOf(updatedItems);
+    }
+
+    @Test
+    void deleteItemByIdTest() {
+         long productId = 2;
+         long basketId = 1;
+
+        List<BasketDBO> beforeDelete = mapper.getBasketItemsById(basketId);
+        assertThat(beforeDelete).isNotNull().extracting(BasketDBO::getProductId).contains(productId);
+
+        mapper.deleteItemById(productId, basketId);
+
+        List<BasketDBO> afterDelete = mapper.getBasketItemsById(basketId);
+        assertThat(afterDelete).isNotNull().extracting(BasketDBO::getProductId).doesNotContain(productId);
+
+        List<BasketDBO> otherBasket = mapper.getBasketItemsById(2L);
+        assertThat(otherBasket).isNotNull().extracting(BasketDBO::getProductId).contains(productId);
     }
 
     @Test

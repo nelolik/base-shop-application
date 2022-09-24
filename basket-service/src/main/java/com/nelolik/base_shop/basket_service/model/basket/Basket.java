@@ -36,11 +36,11 @@ public class Basket {
         }
     }
 
-    public boolean removeProductFromBasket(BasketDb db, long productId) {
+    public boolean removeProductFromBasket(BasketDb db, long productId, long basketId) {
         for (BasketItem item :
                 items) {
             if (item.getProduct().getId() == productId) {
-                db.deleteItemById(productId);
+                db.deleteItemById(productId, basketId);
                 return items.remove(item);
             }
         }

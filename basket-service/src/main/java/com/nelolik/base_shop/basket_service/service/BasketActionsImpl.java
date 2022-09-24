@@ -119,7 +119,7 @@ public class BasketActionsImpl implements BasketActions {
                             userId, productId));
         }
         Basket basket = Basket.getBasketById(basketDb, basketId);
-        basket.removeProductFromBasket(basketDb, productId);
+        basket.removeProductFromBasket(basketDb, productId, basketId);
     }
 
     @Override

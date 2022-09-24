@@ -24,8 +24,8 @@ public interface BasketDbMapper extends BasketDb {
     void updateBasket(@Param("dbo") BasketDBO basketDBO);
 
     @Override
-    @Delete("DELETE FROM basket WHERE product_id=#{productId}")
-    void deleteItemById(@Param("productId") long productId);
+    @Delete("DELETE FROM basket WHERE product_id=#{productId} AND basket_id=#{basketId}")
+    void deleteItemById(@Param("productId") long productId, @Param("basketId") long basketId);
 
     @Delete("DELETE FROM basket WHERE basket_id = #{basketId}")
     void deleteBasket(@Param("basketId") long basketId);

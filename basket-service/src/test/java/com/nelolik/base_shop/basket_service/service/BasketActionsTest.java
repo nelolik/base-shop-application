@@ -179,7 +179,7 @@ public class BasketActionsTest {
 
         Mockito.verify(userBasketDbMapper, times(1)).getBasketIdForUser(userId);
         Mockito.verify(basketDb, times(1)).getBasketItemsById(basketId);
-        Mockito.verify(basketDb, times(1)).deleteItemById(productId);
+        Mockito.verify(basketDb, times(1)).deleteItemById(productId, basketId);
     }
 
     @Test

@@ -12,7 +12,7 @@ public interface BasketDb {
 
     void updateBasket(BasketDBO basketDBO);
 
-    void deleteItemById(long productId);
+    void deleteItemById(long productId, long basketId);
 
     void deleteBasket(long basketId);
 }

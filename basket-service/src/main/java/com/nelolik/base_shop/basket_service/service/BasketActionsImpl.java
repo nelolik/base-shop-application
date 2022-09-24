@@ -2,7 +2,7 @@ package com.nelolik.base_shop.basket_service.service;
 
 import com.nelolik.base_shop.basket_service.model.basket.Basket;
 import com.nelolik.base_shop.basket_service.model.basket.BasketDb;
-import com.nelolik.base_shop.basket_service.model.basket.BasketItemDTO;
+import com.nelolik.base_shop.basket_service.model.dto.BasketItemDTO;
 import com.nelolik.base_shop.basket_service.model.product.ProductShort;
 import com.nelolik.base_shop.basket_service.db.mapper.UserBasketDbMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -84,7 +85,7 @@ public class BasketActionsImpl implements BasketActions {
         Long basketId = userBasketDb.getBasketIdForUser(userId);
         boolean newBasket = false;
         if (basketId == null) {
-            OffsetDateTime now = OffsetDateTime.now(DEFAULT_OFFSET);
+            OffsetDateTime now = OffsetDateTime.now(DEFAULT_OFFSET).truncatedTo(ChronoUnit.SECONDS);
             basketId = userBasketDb.addNewBasketForUser(userId, now);
             if (basketId == null) {
                 log.error("Unable create new basket record in user_basket db for user with id=" + userId);
@@ -114,12 +115,11 @@ public class BasketActionsImpl implements BasketActions {
         Long basketId = userBasketDb.getBasketIdForUser(userId);
         if (basketId == null) {
             throw new RuntimeException(
-                    String.format("Could not find any basket for userId=%d while attempting to remove thr product with id=%d",
+                    String.format("Could not find any basket for userId=%d while attempting to remove the product with id=%d",
                             userId, productId));
         }
         Basket basket = Basket.getBasketById(basketDb, basketId);
-        basket.removeProductFromBasket(productId);
-        basket.saveBasket(basketDb);
+        basket.removeProductFromBasket(basketDb, productId);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class BasketActionsImpl implements BasketActions {
         }
         Basket basket = Basket.getBasketById(basketDb, basketId);
         basket.setProductQuantity(productId, quantity);
-        basket.saveBasket(basketDb);
+        basket.updateBasket(basketDb);
     }
 
     @Override
@@ -145,7 +145,7 @@ public class BasketActionsImpl implements BasketActions {
             log.error("Could not find any basket for userId={} while attempting to remove", userId);
             return;
         }
-        Basket.removeBasket(basketDb, basketId);
+        Basket.deleteBasket(basketDb, basketId);
         userBasketDb.removeBasketByBasketId(basketId);
     }
 

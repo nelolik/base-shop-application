@@ -1,5 +1,6 @@
 package com.nelolik.base_shop.basket_service.model.basket;
 
+import com.nelolik.base_shop.basket_service.model.dto.BasketDBO;
 import com.nelolik.base_shop.basket_service.model.product.ProductShort;
 import lombok.*;
 
@@ -35,10 +36,11 @@ public class Basket {
         }
     }
 
-    public boolean removeProductFromBasket(long productId) {
+    public boolean removeProductFromBasket(BasketDb db, long productId) {
         for (BasketItem item :
                 items) {
             if (item.getProduct().getId() == productId) {
+                db.deleteItemById(productId);
                 return items.remove(item);
             }
         }
@@ -94,7 +96,7 @@ public class Basket {
         return new Basket(basketId, itemList);
     }
 
-    public static void removeBasket(BasketDb db, long basketId) {
+    public static void deleteBasket(BasketDb db, long basketId) {
         db.deleteBasket(basketId);
     }
 }

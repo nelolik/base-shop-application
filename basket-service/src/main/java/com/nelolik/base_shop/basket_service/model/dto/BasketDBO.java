@@ -1,4 +1,4 @@
-package com.nelolik.base_shop.basket_service.model.basket;
+package com.nelolik.base_shop.basket_service.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

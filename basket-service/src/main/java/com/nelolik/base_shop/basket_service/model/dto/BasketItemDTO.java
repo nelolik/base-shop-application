@@ -1,13 +1,13 @@
-package com.nelolik.base_shop.basket_service.model.basket;
+package com.nelolik.base_shop.basket_service.model.dto;
 
 import com.nelolik.base_shop.basket_service.model.product.ProductShort;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
+@ToString
 public class BasketItemDTO {
 
     private ProductShort product;

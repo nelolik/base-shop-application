@@ -1,7 +1,7 @@
 package com.nelolik.base_shop.basket_service.db.mapper;
 
-import com.nelolik.base_shop.basket_service.model.basket.BasketDBO;
 import com.nelolik.base_shop.basket_service.model.basket.BasketDb;
+import com.nelolik.base_shop.basket_service.model.dto.BasketDBO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -22,6 +22,10 @@ public interface BasketDbMapper extends BasketDb {
             "product_name=#{dbo.productName}, product_price=#{dbo.productPrice}, quantity=#{dbo.quantity} " +
             "WHERE basket_id=#{dbo.basketId} AND product_id=#{dbo.productId} ")
     void updateBasket(@Param("dbo") BasketDBO basketDBO);
+
+    @Override
+    @Delete("DELETE FROM basket WHERE product_id=#{productId}")
+    void deleteItemById(@Param("productId") long productId);
 
     @Delete("DELETE FROM basket WHERE basket_id = #{basketId}")
     void deleteBasket(@Param("basketId") long basketId);

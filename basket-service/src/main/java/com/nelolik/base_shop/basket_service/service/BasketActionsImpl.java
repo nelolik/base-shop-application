@@ -1,5 +1,6 @@
 package com.nelolik.base_shop.basket_service.service;
 
+import com.nelolik.base_shop.basket_service.dto.mapper.BasketItemMapper;
 import com.nelolik.base_shop.basket_service.model.basket.Basket;
 import com.nelolik.base_shop.basket_service.model.basket.BasketDb;
 import com.nelolik.base_shop.basket_service.dto.BasketItemDTO;
@@ -29,6 +30,7 @@ public class BasketActionsImpl implements BasketActions {
 
     private final BasketDb basketDb;
 
+    private final BasketItemMapper basketItemMapper;
     private static final ZoneOffset DEFAULT_OFFSET = ZoneOffset.from(ZoneOffset.UTC);
 
     @Override
@@ -42,7 +44,7 @@ public class BasketActionsImpl implements BasketActions {
             validateProducts(basketId);
         }
         return Basket.getBasketById(basketDb, basketId).getItemsList().stream()
-                .map(i -> new BasketItemDTO(i.getProduct(), i.getQuantity())).collect(Collectors.toList());
+                .map(i -> basketItemMapper.basketItemToBasketItemDto(i)).collect(Collectors.toList());
     }
 
     private void validateProducts(Long basketId) {

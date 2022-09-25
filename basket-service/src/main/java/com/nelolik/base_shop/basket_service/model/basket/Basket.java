@@ -1,6 +1,8 @@
 package com.nelolik.base_shop.basket_service.model.basket;
 
 import com.nelolik.base_shop.basket_service.dto.BasketDBO;
+import com.nelolik.base_shop.basket_service.dto.mapper.BasketItemMapper;
+import com.nelolik.base_shop.basket_service.dto.mapper.BasketItemMapperImpl;
 import com.nelolik.base_shop.basket_service.model.product.ProductShort;
 import lombok.*;
 
@@ -16,6 +18,8 @@ public class Basket {
     private Long basketId;
 
     private List<BasketItem> items;
+
+    private static final  BasketItemMapper itemMapper = new BasketItemMapperImpl();
 
     public BigDecimal getTotalPrice() {
         BigDecimal price = BigDecimal.ZERO;
@@ -70,7 +74,7 @@ public class Basket {
         for (BasketItem item :
                 items) {
             ProductShort p = item.getProduct();
-            dbos.add(new BasketDBO(basketId, p.getId(), p.getName(), p.getPrice(), item.getQuantity()));
+            dbos.add(itemMapper.basketItemToBasketDBO(item, basketId));
         }
         db.saveBasket(dbos);
     }
@@ -79,7 +83,7 @@ public class Basket {
         for (BasketItem item :
                 items) {
             ProductShort p = item.getProduct();
-            db.updateBasket(new BasketDBO(basketId, p.getId(), p.getName(), p.getPrice(), item.getQuantity()));
+            db.updateBasket(itemMapper.basketItemToBasketDBO(item, basketId));
         }
     }
 
@@ -88,10 +92,7 @@ public class Basket {
         if (basketDBOs == null || basketDBOs.isEmpty()) {
             return new Basket(basketId, Collections.emptyList());
         }
-        List<BasketItem> itemList = basketDBOs.stream().map(dbo ->
-                        new BasketItem(
-                                new ProductShort(dbo.getProductId(), dbo.getProductName(), dbo.getProductPrice()),
-                                dbo.getQuantity()))
+        List<BasketItem> itemList = basketDBOs.stream().map(itemMapper::basketDboToBasketItem)
                 .collect(Collectors.toList());
         return new Basket(basketId, itemList);
     }

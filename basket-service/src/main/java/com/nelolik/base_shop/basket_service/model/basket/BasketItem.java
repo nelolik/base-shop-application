@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
 @Getter
 @Setter
 public class BasketItem {

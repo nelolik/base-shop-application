@@ -17,4 +17,11 @@ public class ApiUris {
     private String productId;
     private String productSearch;
     private String productsForBar;
+
+    private String basketListOfProducts;
+    private String basketAddProduct;
+    private String basketRemoveProduct;
+    private String basketSetQuantity;
+    private String basketRemove;
+    private String basketGetTotalPrice;
 }

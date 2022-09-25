@@ -19,16 +19,12 @@ public class BasketServiceImpl implements BasketService {
 
     private final ApiUris apiUris;
 
-    private final String ATTRIBUTE_USER_ID = "user_id";
-    private final String ATTRIBUTE_PRODUCT_ID = "product_id";
-    private final String ATTRIBUTE_QUANTITY = "quantity";
-
 
     @Override
     public List<BasketItemDTO> getListOfOrderedProducts(long userId) {
         WebClient client = WebClient.create(apiUris.getBasketListOfProducts() + userId);
         ResponseEntity<List<BasketItemDTO>> responseEntity = client.get().retrieve().toEntityList(BasketItemDTO.class)
-                .doOnError(e -> log.error("Error retrieve a list of ordered product from a basket service. /n{}",
+                .doOnError(e -> log.error("Error retrieve a list of ordered product from a basket service. \n{}",
                         e.getMessage()))
                 .block();
         if (responseEntity != null && responseEntity.getStatusCode().equals(HttpStatus.OK)) {
@@ -36,7 +32,7 @@ public class BasketServiceImpl implements BasketService {
         } else {
             return client.get().retrieve().toEntityList(BasketItemDTO.class)
                     .doOnError(e -> log.error(
-                            "Error on second retrieve of a list of ordered product from a basket service. /n{}",
+                            "Error on second retrieve of a list of ordered product from a basket service. \n{}",
                             e.getMessage()))
                     .block().getBody();
         }
@@ -45,21 +41,26 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public List<BasketItemDTO> addProductToBasket(long userId, long productId, int quantity) {
         WebClient client = WebClient.create(apiUris.getBasketAddProduct());
-        ResponseEntity<List<BasketItemDTO>> responseEntity = client.post().attribute(ATTRIBUTE_USER_ID, userId)
-                .attribute(ATTRIBUTE_PRODUCT_ID, productId)
-                .attribute(ATTRIBUTE_QUANTITY, quantity)
+        ResponseEntity<List<BasketItemDTO>> responseEntity = client.post().uri(uriBuilder -> uriBuilder
+                        .queryParam(ATTRIBUTE_USER_ID, userId)
+                        .queryParam(ATTRIBUTE_PRODUCT_ID, productId)
+                        .queryParam(ATTRIBUTE_QUANTITY, quantity)
+                        .build())
                 .retrieve().toEntityList(BasketItemDTO.class)
-                .doOnError(e -> log.error("Error add product to basket-service. userId={}, productId={}, quantity={}. /n{}",
+                .doOnError(e -> log.error("Error add product to basket-service. userId={}, productId={}, quantity={}. \n{}",
                         userId, productId, quantity, e.getMessage()))
                 .block();
         if (responseEntity != null && responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             return responseEntity.getBody();
         } else {
-            return client.post().attribute(ATTRIBUTE_USER_ID, userId)
-                    .attribute(ATTRIBUTE_PRODUCT_ID, productId)
-                    .attribute(ATTRIBUTE_QUANTITY, quantity)
+            return client.post().uri(uriBuilder -> uriBuilder
+                    .queryParam(ATTRIBUTE_USER_ID, userId)
+                    .queryParam(ATTRIBUTE_PRODUCT_ID, productId)
+                    .queryParam(ATTRIBUTE_QUANTITY, quantity)
+                    .build())
                     .retrieve().toEntityList(BasketItemDTO.class)
-                    .doOnError(e -> log.error("Error add product to basket-service. userId={}, productId={}, quantity={}. /n{}",
+                    .doOnError(e -> log.error(
+                            "Error retry to add product to basket-service. userId={}, productId={}, quantity={}. \n{}",
                             userId, productId, quantity, e.getMessage()))
                     .block().getBody();
         }
@@ -71,14 +72,14 @@ public class BasketServiceImpl implements BasketService {
         ResponseEntity<List<BasketItemDTO>> responseEntity = client.post()
                 .attribute(ATTRIBUTE_USER_ID, userId).attribute(ATTRIBUTE_PRODUCT_ID, productId)
                 .retrieve().toEntityList(BasketItemDTO.class)
-                .doOnError(e -> log.error("Error remove product from basket. userId={}, productId={} /n{}",
+                .doOnError(e -> log.error("Error remove product from basket. userId={}, productId={} \n{}",
                         userId, productId, e.getMessage())).block();
         if (responseEntity != null && responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             return responseEntity.getBody();
         } else {
             return client.post().attribute(ATTRIBUTE_USER_ID, userId).attribute(ATTRIBUTE_PRODUCT_ID, productId)
                     .retrieve().toEntityList(BasketItemDTO.class)
-                    .doOnError(e -> log.error("Error remove product from basket. userId={}, productId={} /n{}",
+                    .doOnError(e -> log.error("Error remove product from basket. userId={}, productId={} \n{}",
                             userId, productId, e.getMessage())).block().getBody();
         }
     }
@@ -91,7 +92,7 @@ public class BasketServiceImpl implements BasketService {
                 .attribute(ATTRIBUTE_PRODUCT_ID, productId)
                 .attribute(ATTRIBUTE_QUANTITY, quantity)
                 .retrieve().toEntityList(BasketItemDTO.class)
-                .doOnError(e -> log.error("Error set product quantity. userId={}, productId={}, quantity={} /n{}",
+                .doOnError(e -> log.error("Error set product quantity. userId={}, productId={}, quantity={} \n{}",
                         userId, productId, quantity, e.getMessage())).block();
         if (responseEntity != null && responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             return responseEntity.getBody();
@@ -101,7 +102,7 @@ public class BasketServiceImpl implements BasketService {
                     .attribute(ATTRIBUTE_PRODUCT_ID, productId)
                     .attribute(ATTRIBUTE_QUANTITY, quantity)
                     .retrieve().toEntityList(BasketItemDTO.class)
-                    .doOnError(e -> log.error("Error retrying to set product quantity. userId={}, productId={}, quantity={} /n{}",
+                    .doOnError(e -> log.error("Error retrying to set product quantity. userId={}, productId={}, quantity={} \n{}",
                             userId, productId, quantity, e.getMessage())).block().getBody();
         }
     }
@@ -111,12 +112,12 @@ public class BasketServiceImpl implements BasketService {
         WebClient client = WebClient.create(apiUris.getBasketRemove());
         ResponseEntity<Void> responseEntity = client.post().attribute(ATTRIBUTE_USER_ID, userId)
                 .retrieve().toBodilessEntity()
-                .doOnError(e -> log.error("Error remove basket for userId={}. /n{}", userId, e.getMessage()))
+                .doOnError(e -> log.error("Error remove basket for userId={}. \n{}", userId, e.getMessage()))
                 .block();
         if (responseEntity != null && !responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             client.post().attribute(ATTRIBUTE_USER_ID, userId)
                     .retrieve().toBodilessEntity()
-                    .doOnError(e -> log.error("Error retrying to remove basket for userId={}. /n{}",
+                    .doOnError(e -> log.error("Error retrying to remove basket for userId={}. \n{}",
                             userId, e.getMessage()))
                     .block();
         }
@@ -127,7 +128,7 @@ public class BasketServiceImpl implements BasketService {
         WebClient client = WebClient.create(apiUris.getBasketGetTotalPrice());
         return client.get().attribute(ATTRIBUTE_USER_ID, userId).retrieve()
                 .bodyToMono(BigDecimal.class)
-                .doOnError(e -> log.error("Error get total price for userId={}, /n{}", userId, e.getMessage()))
+                .doOnError(e -> log.error("Error get total price for userId={}, \n{}", userId, e.getMessage()))
                 .block();
     }
 }

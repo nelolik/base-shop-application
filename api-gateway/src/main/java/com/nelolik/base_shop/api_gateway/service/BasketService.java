@@ -18,4 +18,8 @@ public interface BasketService {
     void removeBasket(long userId);
 
     BigDecimal getTotalPrice(long userId);
+
+    String ATTRIBUTE_USER_ID = "user_id";
+    String ATTRIBUTE_PRODUCT_ID = "product_id";
+    String ATTRIBUTE_QUANTITY = "quantity";
 }

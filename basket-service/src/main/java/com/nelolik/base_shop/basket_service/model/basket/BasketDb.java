@@ -1,6 +1,6 @@
 package com.nelolik.base_shop.basket_service.model.basket;
 
-import com.nelolik.base_shop.basket_service.model.dto.BasketDBO;
+import com.nelolik.base_shop.basket_service.dto.BasketDBO;
 
 import java.util.List;
 

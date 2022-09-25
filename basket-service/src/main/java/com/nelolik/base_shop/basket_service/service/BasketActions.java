@@ -1,6 +1,6 @@
 package com.nelolik.base_shop.basket_service.service;
 
-import com.nelolik.base_shop.basket_service.model.dto.BasketItemDTO;
+import com.nelolik.base_shop.basket_service.dto.BasketItemDTO;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -2,7 +2,7 @@ package com.nelolik.base_shop.basket_service.service;
 
 import com.nelolik.base_shop.basket_service.model.basket.Basket;
 import com.nelolik.base_shop.basket_service.model.basket.BasketDb;
-import com.nelolik.base_shop.basket_service.model.dto.BasketItemDTO;
+import com.nelolik.base_shop.basket_service.dto.BasketItemDTO;
 import com.nelolik.base_shop.basket_service.model.product.ProductShort;
 import com.nelolik.base_shop.basket_service.db.mapper.UserBasketDbMapper;
 import lombok.RequiredArgsConstructor;

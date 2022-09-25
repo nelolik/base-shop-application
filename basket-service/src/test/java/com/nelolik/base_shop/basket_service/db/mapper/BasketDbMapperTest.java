@@ -1,7 +1,7 @@
 package com.nelolik.base_shop.basket_service.db.mapper;
 
 
-import com.nelolik.base_shop.basket_service.model.dto.BasketDBO;
+import com.nelolik.base_shop.basket_service.dto.BasketDBO;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;

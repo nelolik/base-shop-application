@@ -1,7 +1,7 @@
 package com.nelolik.base_shop.basket_service.db.mapper;
 
 import com.nelolik.base_shop.basket_service.model.basket.BasketDb;
-import com.nelolik.base_shop.basket_service.model.dto.BasketDBO;
+import com.nelolik.base_shop.basket_service.dto.BasketDBO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

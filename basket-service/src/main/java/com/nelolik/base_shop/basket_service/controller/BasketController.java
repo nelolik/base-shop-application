@@ -1,6 +1,6 @@
 package com.nelolik.base_shop.basket_service.controller;
 
-import com.nelolik.base_shop.basket_service.model.dto.BasketItemDTO;
+import com.nelolik.base_shop.basket_service.dto.BasketItemDTO;
 import com.nelolik.base_shop.basket_service.service.BasketActions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,9 +35,9 @@ public class SearchControllerTest {
     private ProductService productService;
 
     private long ID = 1;
-    private ProductShort p1 = new ProductShort(ID++, "first", 0.);
-    private ProductShort p2 = new ProductShort(ID++, "second", 0.);
-    private ProductShort p3 = new ProductShort(ID++, "third", 0.);
+    private ProductShort p1 = new ProductShort(ID++, "first", BigDecimal.ZERO);
+    private ProductShort p2 = new ProductShort(ID++, "second", BigDecimal.ZERO);
+    private ProductShort p3 = new ProductShort(ID++, "third", BigDecimal.ZERO);
     private List<ProductShort> productList = List.of(p1, p2, p3);
 
 

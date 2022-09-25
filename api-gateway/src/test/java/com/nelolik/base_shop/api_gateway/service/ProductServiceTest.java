@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +28,9 @@ public class ProductServiceTest {
     private static WireMockServer wireMockServer;
 
     private long ID = 1;
-    private Product p1 = new Product(ID++, "first", "description1", 10.0, 15, "category1");
-    private Product p2 = new Product(ID++, "second", "description2", 2.5, 23, "category2");
-    private Product p3 = new Product(ID++, "third", "description3", 3.4, 45, "category2");
+    private Product p1 = new Product(ID++, "first", "description1", BigDecimal.valueOf(1000L, 2), 15, "category1");
+    private Product p2 = new Product(ID++, "second", "description2", BigDecimal.valueOf(250L, 2), 23, "category2");
+    private Product p3 = new Product(ID++, "third", "description3", BigDecimal.valueOf(340L, 2), 45, "category2");
 
     private List<Product> productList = List.of(p1, p2, p3);
     private List<ProductShort> shorts = productList.stream()

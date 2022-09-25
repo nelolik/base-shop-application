@@ -1,7 +1,11 @@
 package com.nelolik.base_shop.api_gateway.model;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.nelolik.base_shop.api_gateway.jackson.BigDecimalMoneyDeserializer;
 import lombok.*;
+
+import java.math.BigDecimal;
 
 
 @Getter
@@ -17,7 +21,8 @@ public class Product {
 
     private String description;
 
-    private Double price;
+    @JsonDeserialize(using = BigDecimalMoneyDeserializer.class)
+    private BigDecimal price;
 
     private Integer quantity;
 

@@ -3,6 +3,7 @@ package com.nelolik.base_shop.api_gateway.model;
 import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode

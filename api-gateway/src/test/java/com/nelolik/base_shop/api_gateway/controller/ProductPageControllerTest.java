@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,9 +41,9 @@ public class ProductPageControllerTest {
 
 
     private static long ID = 1;
-    private static Product p1 = new Product(ID++, "first", "first product", 100., 20,  "category1");
-    private static Product p2 = new Product(ID++, "second", "second product", 50., 20, "category1");
-    private static Product p3 = new Product(ID++, "third", "Best of all", 20., 55, "category2");
+    private static Product p1 = new Product(ID++, "first", "first product", BigDecimal.valueOf(10000L, 2), 20,  "category1");
+    private static Product p2 = new Product(ID++, "second", "second product", BigDecimal.valueOf(5000L, 2), 20, "category1");
+    private static Product p3 = new Product(ID++, "third", "Best of all", BigDecimal.valueOf(2000L, 2), 55, "category2");
     private static List<Product> productList = List.of(p1, p2, p3);
     private static List<ProductShort> featuredProducts = new ArrayList<>();
     private static List<String> categories;
@@ -50,7 +51,7 @@ public class ProductPageControllerTest {
     @BeforeAll
     static void init() {
         for (long i = 1; i < 5; i++) {
-            featuredProducts.add(new ProductShort(i, "product" + i, 0.));
+            featuredProducts.add(new ProductShort(i, "product" + i, BigDecimal.ZERO));
         }
         categories = productList.stream().map(Product::getCategory).distinct().collect(Collectors.toList());
     }
